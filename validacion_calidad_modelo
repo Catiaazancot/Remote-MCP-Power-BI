@@ -1,24 +1,55 @@
+FASE 1: VALIDACION CALIDAD MODELO
+
 Ajuste 1
 
 Unificar idioma de medidas visibles y nombres de negocio.
 
 Ajuste 2
 
-Ocultar claves técnicas y columnas que no quieras que el agente use.
+Ocultar claves técnicas y columnas que no quiero que use el agente
+
 
 Ajuste 3
 
-Revisar OrdersSummary:
+Crear carpeta 'Medidas MVP' --> recomendable (reduce errores del agente y mejora mucho la calidad de respuestas.)
 
-si sobra, fuera del circuito principal
-si no sobra, definir muy bien para qué existe
-Ajuste 4
+el agente funciona mejor si tiene:
+- pocas medidas principales
+- nombres muy claros
+- semántica de negocio limpia
 
-Dejar una capa mínima de medidas “oficiales” para el chat:
+Si no aumentan estos riesgos:
+- que elija una medida incorrecta
+- que mezcle medidas parecidas
+- que responda con algo poco entendible para negocio
 
-ingresos
-pedidos
-ticket medio
-clientes
-crecimiento
-ventas por fecha/canal/categoría/producto
+# FASE 2: ACTIVACION Y CONEXION REMOTE MCP
+
+endpoint MCP disponible (lado Microsoft)
+ modelo accesible vía MCP
+autenticación basada en usuario
+
+Fase 2.1 – Validar acceso al endpoint MCP
+
+Contexto (rápido)
+
+El endpoint que vas a usar es: https://api.fabric.microsoft.com/v1/mcp/powerbi
+
+Tu backend (o cliente MCP) se conecta aquí y:
+
+pide esquema del modelo
+genera DAX
+ejecuta queries
+
+Para llamar a MCP necesitas:
+
+token de Azure AD (Entra ID)
+
+No vale API key.
+
+
+
+
+
+
+
