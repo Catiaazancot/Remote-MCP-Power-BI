@@ -1,0 +1,26 @@
+El primero es preparar bien el modelo semántico. Antes de poner ningún chat, hay que revisar que el modelo de Power BI esté limpio, con medidas bien nombradas, definiciones claras de negocio, 
+relaciones correctas y seguridad bien resuelta. Además, el Remote MCP funciona mejor cuando el modelo está preparado para IA con esquema optimizado, instrucciones y respuestas verificadas. 
+Si esta base falla, el chat fallará aunque la tecnología esté bien montada.
+
+El segundo bloque es habilitar el acceso técnico en Power BI/Fabric. Hay que activar el uso del endpoint MCP en preview dentro del tenant y dar acceso al modelo semántico que se va a consultar. 
+El endpoint remoto es el que hospeda Microsoft, así que no tenéis que desplegar vuestro propio servidor MCP. A nivel práctico, la gracia es precisamente esa: conectarse al endpoint remoto y 
+usarlo como capa de consulta sobre el modelo ya publicado.
+
+El tercer bloque es la autenticación y los permisos. Aquí está una parte crítica del producto. El usuario que consulta necesita permisos suficientes sobre el modelo, al menos Build, 
+y las consultas se ejecutan con el contexto del usuario autenticado. Si queréis respetar RLS, lo correcto es autenticación de usuario; con service principal, Microsoft indica que RLS no está soportado actualmente. 
+Para un producto orientado a dirección y negocio, esto hay que dejarlo muy bien diseñado desde el principio.
+
+El cuarto bloque es construir vuestra capa de experiencia. Remote MCP ya permite recuperar el esquema, generar DAX y ejecutar consultas; por tanto, vuestro desarrollo no debería centrarse en rehacer eso, 
+sino en la capa de valor: interfaz de chat, prompts, guardrails, plantillas de preguntas, reformulación de respuestas, control de tono, explicación de resultados y límites de uso. 
+En otras palabras, Microsoft pone el “motor de consulta” y vosotros construís el producto utilizable y vendible encima.
+
+El quinto bloque es la implantación por cliente. Cuando una empresa lo contrate, el proceso debería ser bastante estándar: revisar su modelo, adaptar naming y definiciones, validar seguridad, 
+habilitar el acceso MCP, conectar vuestra interfaz/agente, probar preguntas reales del negocio y cerrar una fase de validación. Como está en preview, conviene tratarlo como producto controlado, 
+con alcance acotado y sin prometer automatismos perfectos ni cobertura total de casos complejos desde el día uno.
+
+Resumido en una línea:
+publicáis y gobernáis bien el modelo en Power BI, activáis Remote MCP, conectáis vuestra capa de chat y validáis preguntas reales del negocio. Lo complejo no será tanto el MCP como la calidad del modelo, 
+la seguridad y la experiencia de usuario.
+
+El orden correcto para hacerlo sería este:
+1) diseño funcional del producto, 2) checklist del modelo semántico, 3) arquitectura técnica mínima, 4) flujo de implantación por cliente, 5) demo/MVP.
