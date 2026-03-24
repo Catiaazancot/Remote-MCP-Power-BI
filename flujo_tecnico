@@ -1,0 +1,153 @@
+1. Modelo en Power BI 
+
+Input:
+
+Dataset publicado en Power BI (Service)
+Modelo semántico ya trabajado
+
+Requisitos mínimos:
+
+Medidas bien nombradas → Ventas Total, no Measure_1
+Dimensiones claras → Fecha, Cliente, Producto
+Relaciones correctas
+KPIs definidos (margen, ventas, etc.)
+RLS si aplica
+
+
+2. Activar Remote MCP en Power BI
+
+Activar opción MCP en el tenant (preview)
+Identificar:
+Workspace
+Dataset (modelo semántico)
+Tener endpoint MCP disponible
+
+
+3. Autenticación 
+
+Usuario real (Azure AD / Entra ID)
+
+Cada usuario se autentica
+Respeta RLS automáticamente
+Más seguro
+
+
+4. Tu capa: el “agente” (aquí está vuestro producto)
+
+Aquí está vuestro desarrollo real.
+
+Componentes:
+4.1 Interfaz
+Web app / Teams / app interna
+Input: pregunta en lenguaje natural
+
+
+4.2 LLM (ChatGPT o similar)
+
+Recibe:
+pregunta del usuario
+contexto (instrucciones + modelo)
+
+Y decide: qué consultar
+
+4.3 Conexión a Remote MCP
+
+El flujo interno es:
+
+El agente pide:
+→ esquema del modelo
+Genera DAX:
+→ basado en tablas/medidas
+Ejecuta query en MCP
+MCP devuelve datos
+
+5. Transformación de respuesta 
+
+El MCP devuelve datos “crudos”.
+
+Aquí es donde aportáis valor:
+
+Explicación en lenguaje natural
+Insights
+Contexto
+
+
+6. Respuesta al usuario
+
+Salida final:
+
+Respuesta clara
+Opcional:
+tabla
+gráfico
+insight automático
+
+Flujo resumido 
+Usuario pregunta
+   ↓
+Tu interfaz
+   ↓
+LLM (interpreta)
+   ↓
+Remote MCP (consulta modelo)
+   ↓
+Datos
+   ↓
+LLM (explica)
+   ↓
+Usuario recibe respuesta
+
+Arquitectura mínima
+
+Esto es lo que realmente necesitas:
+
+Power BI (modelo)
+Remote MCP (Microsoft)
+Backend ligero (Python / Node)
+LLM (API)
+Frontend (web / Teams)
+
+
+
+Dónde está el valor real (no en MCP)
+
+MCP hace:
+acceder al modelo
+generar DAX
+ejecutar queries
+
+Vosotros hacéis:
+traducir negocio → consulta
+controlar qué se puede preguntar
+mejorar respuestas
+evitar errores
+dar contexto
+
+Problemas reales que tendrás 
+1. Preguntas ambiguas
+
+2. Errores de interpretación
+
+El LLM puede:
+usar mal una medida
+mezclar conceptos
+
+solución:prompts + restricciones
+
+3. Modelo mal preparado
+
+
+Posible implementación:
+
+Fase 1 – MVP 
+1 modelo Power BI
+1 endpoint MCP
+interfaz básica (chat)
+10 preguntas típicas
+
+
+Fase 2 – Producto
+control de prompts
+gestión de usuarios
+seguridad
+logs de preguntas
