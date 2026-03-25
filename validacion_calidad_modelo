@@ -25,12 +25,6 @@ Si no aumentan estos riesgos:
 
 # FASE 2: ACTIVACION Y CONEXION REMOTE MCP
 
-endpoint MCP disponible (lado Microsoft)
- modelo accesible vía MCP
-autenticación basada en usuario
-
-Fase 2.1 – Validar acceso al endpoint MCP
-
 Contexto (rápido)
 
 El endpoint que vas a usar es: https://api.fabric.microsoft.com/v1/mcp/powerbi
@@ -41,15 +35,53 @@ pide esquema del modelo
 genera DAX
 ejecuta queries
 
-Para llamar a MCP necesitas:
+Para llamar a MCP necesitas: token de Azure AD (Entra ID)
 
-token de Azure AD (Entra ID)
+En ppo se hará con (python) más rapido y sencillo. Para backend serio : Node.js
+Para hacer prueba rápida vs code + github copilot (es un cliente mcp ya hecho).
+Con python desarrollas tu propio cliente / backend para conectarte al endpoint MCP remoto desde tu aplicacion- "Además, Microsoft advierte que 
+no todos los clientes MCP soportan endpoints remotos HTTP, así que en Python no vale “cualquier cosa”; 
+necesitas una librería o implementación que sí soporte ese transporte."
 
-No vale API key.
+Para el MVP, usaría autenticación delegada de usuario, no service principal, porque el servidor MCP remoto ejecuta con los permisos del usuario autenticado 
+y eso encaja mejor con tu objetivo de respetar seguridad y, más adelante, RLS. 
+Además, Microsoft indica que el servidor remoto usa los permisos del usuario autenticado, 
+y que para empezar necesitas tener Build permission sobre al menos un modelo semántico.
+
+Primero: validar MCP con VS Code + GitHub Copilot
+Después: pasar a Python para construir vuestro backend y vuestro producto.
+
+Necesitas tener ya esto: ID modelo semantico / permiso build  ID: d93917e1-621a-4516-a7cc-09bb5fc13c3a
+
+PASO 1: INSTALAR EXTENSION GITHUB COPILOT CHAT EN VS CODE
+
+PASO 2: INSTALAR EN VS CODE EL REMOTE POWER BI MCP (web microsoft)
+
+PASO 3: PROBAR CONEXION DESDE COPILOT (meterle el ID del modelo semantico en el Copilot)
+
+Funcionamiento: Copilot usa el MCP por detrás, se autentica con mi usuario (he iniciado sesion), se conecta al modelo (endpoint) y ejecuta consulta
 
 
+El chat me devuelve las tablas, valido que:
+
+el endpoint MCP responde
+la autenticación funciona
+tu usuario tiene acceso al modelo
+Copilot puede leer el esquema
+
+Observaciones: MCP ve también OrdersSummary. Eso confirma lo que ya sabíamos: el agente tiene visibilidad de ambas tablas, así que luego habrá que guiarlo bien con prompts para que no mezcle lógicas si no debe.
+
+“¿Cuáles son los ingresos totales?” o “Devuélveme los pedidos pagados totales” No empezaría todavía con preguntas ambiguas o complejas.
 
 
+## FASE 2 – MCP
 
+### Configuración
+- Endpoint: https://api.fabric.microsoft.com/v1/mcp/powerbi
+- ArtifactId: d93917e1-621a-4516-a7cc-09bb5fc13c3a
+- Modelo: Predicción Ecommerce
+- Workspace: Predicciones ECommerce
 
-
+### Resultado
+- MCP conectado ✔️
+- Schema recuperado ✔️
