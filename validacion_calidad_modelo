@@ -85,3 +85,90 @@ Observaciones: MCP ve también OrdersSummary. Eso confirma lo que ya sabíamos: 
 ### Resultado
 - MCP conectado ✔️
 - Schema recuperado ✔️
+
+Proximos pasos:
+
+1. Validar precisión
+
+No basta con que responda. Hay que comprobar:
+
+si el resultado numérico es correcto
+si ha usado la medida adecuada
+si la consulta era coherente con el modelo
+
+Aquí comparas lo que devuelve Copilot con lo que te da Power BI manualmente.
+
+2. Probar 5–10 preguntas controladas
+
+Antes de construir nada, haces una batería corta de preguntas típicas, por ejemplo:
+
+ingresos totales
+pedidos pagados
+ticket medio
+ingresos por mes
+ingresos por canal
+top categorías
+clientes con pedido pagado
+crecimiento vs mes anterior
+
+Objetivo: ver en qué falla y en qué acierta.
+
+3. Detectar errores reales
+
+Aquí documentas cosas como:
+
+usa fact_sales cuando debería usar OrdersSummary
+mezcla Ingresos Totales con Ingresos Pagados
+interpreta mal una pregunta ambigua
+no agrupa bien por fecha
+responde bien el dato pero mal la explicación
+
+Esto luego te sirve para diseñar prompts y restricciones.
+
+4. Definir reglas del agente
+
+Cuando ya ves cómo responde, defines las reglas de uso. Por ejemplo:
+
+para métricas por pedido, priorizar OrdersSummary
+para ingresos pagados, usar siempre Ingresos Pagados
+responder en español
+no inventar si no encuentra una medida
+pedir aclaración si la pregunta es ambigua
+
+Este paso es clave. Aquí empieza vuestro valor real.
+
+5. Diseñar el MVP
+
+Una vez validado MCP, ya montas el producto mínimo:
+
+interfaz de chat
+backend en Python
+autenticación
+conexión a MCP
+prompt del sistema
+respuesta en lenguaje natural
+
+Todavía simple, pero ya vuestro.
+
+6. Añadir capa de negocio
+
+Después de obtener el dato crudo, hacéis la transformación:
+
+explicación clara
+insight
+contexto
+aviso si hay limitaciones
+
+Ejemplo:
+no solo “ingresos totales = X”, sino también
+“esto supone un crecimiento del X% respecto al mes anterior”.
+
+7. Seguridad y gobierno
+
+Cuando el MVP técnico funcione:
+
+control de usuarios
+logs de preguntas
+límites de uso
+revisión de permisos
+RLS, si la quieres activar después
