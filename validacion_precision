@@ -1,0 +1,139 @@
+Bloque básico (controlado)
+“¿Cuáles son los ingresos totales?”
+“¿Cuántos pedidos pagados hay?”
+“¿Cuál es el ticket medio?”
+“Dame los ingresos por mes”
+“Dame los ingresos por canal”
+
+Comprobar: 
+
+1. Exactitud del número
+
+2. Qué medida ha usado
+
+Mira si ha usado:
+
+[Ingresos Pagados] vs [Ingresos Totales]
+tabla correcta (fact_sales vs OrdersSummary)
+medidas de tu carpeta “Medidas MVP”
+
+✔ Ideal: usa SIEMPRE tus medidas controladas
+
+3. Coherencia de la consulta
+
+Ejemplo de errores típicos:
+
+no filtra pedidos pagados
+mezcla conceptos (ingresos vs pedidos)
+agrupa mal por fecha
+usa columnas en vez de medidas
+
+
+--> Recoger errores para diseñar prompts, limitar errores del agente
+
+PRUEBA 1 (consultas sencillas). OK
+
+
+PRUEBA 2 (lenguaje menos exacto) para ver si: 
+
+mantiene la lógica correcta con preguntas menos exactas
+elige bien entre medidas parecidas
+entiende contexto de negocio
+pide aclaración cuando debería
+empieza a mezclar tablas o conceptos
+
+
+Cómo clasificar cada respuesta
+
+
+OK → correcta y coherente
+OK con riesgo → acierta, pero la interpretación podría ser peligrosa
+MAL → cálculo o lógica incorrecta
+AMBIGUA → debería haber pedido aclaración
+
+
+Si falla en preguntas ambiguas. Es normal. Ahí es donde entra vuestro valor:
+
+prompt del sistema
+catálogo de reglas
+vocabulario de negocio
+aclaraciones automáticas
+Si mezcla medidas o tablas
+
+Entonces habrá que endurecer más:
+
+nombres visibles
+carpeta MVP
+reglas del agente
+instrucciones de priorización
+
+
+Bloque A. Ambigüedad controlada
+
+¿Cuánto hemos vendido?  OK
+¿Cuál es el valor medio de los pedidos? OK
+¿Cómo van las ventas? OK
+¿Qué canal funciona mejor? OK
+
+Bloque B. Variación natural del lenguaje
+
+Dime los ingresos de este año OK
+Muéstrame la evolución mensual de ingresos OK (NO GRÁFICO)
+¿Qué categorías venden más? OK 
+¿Cuántos clientes han comprado? OK
+Dame ticket medio por canal OK
+
+✔ entiende lenguaje natural
+✔ elige bien medidas
+✔ estructura bien la respuesta
+✔ incluso añade contexto (insight simple)
+
+
+PRUEBA 3: TEST DE ROTURA
+
+2. Preguntas peligrosas (mezcla de conceptos)
+“Dame ingresos por cliente y canal pero solo de los que no han comprado” --> Si la pregunta es incoherente o contradictoria → pedir aclaración antes de responder 
+
+
+5. Cruce complejo
+
+“Top 3 categorías con mayor crecimiento respecto al mes anterior” --> Nunca cambiar la lógica de la pregunta sin confirmación explícita "tal vez el usuario quiera comprobar"... NO
+
+
+Predicciones
+
+1️⃣ Forecasting 
+👉 “¿Cómo se espera que evolucionen los ingresos en los próximos 3 meses?” OK con riesgo alto
+
+hace cálculos no controlados
+no define claramente limitaciones
+problemas con relaciones del modelo
+no pide confirmación del enfoque
+--> Nunca presentar estimaciones como predicciones reales sin modelo explícito. --> Evitar cálculos no trazables (“cálculo mental”)
+
+
+👉 “¿Hay algún comportamiento anómalo en los ingresos o pedidos en los últimos meses?”OK
+
+👉 “¿Qué factores están influyendo más en los ingresos?”OK
+
+
+
+🔥 SIGUIENTE PASO (YA DEFINITIVO)
+
+Ya tienes suficiente evidencia real.
+
+Ahora toca:
+
+👉 Definir el PROMPT DEL SISTEMA DEL AGENTE
+
+Ahí vamos a controlar:
+
+ambigüedad
+incoherencias
+decisiones sin permiso
+uso de medidas
+tono de respuesta
+estructura de salida
+
+
+
