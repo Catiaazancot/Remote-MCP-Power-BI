@@ -1,0 +1,70 @@
+Fase 1. MVP técnico mínimo
+
+Arquitectura mínima recomendada
+
+Front: Streamlit
+
+Backend: Python
+cliente que llame al servidor MCP remoto de Power BI
+
+capa simple para:
+inyectar system prompt
+mantener contexto conversacional
+mostrar respuesta
+
+Lógica mínima
+usuario pregunta
+se añade prompt del sistema
+se manda al modelo
+MCP consulta Power BI
+devuelves respuesta
+guardas histórico de conversación
+
+
+
+
+Paso 1: estructura base del proyecto
+
+mvp_bi_agent/
+│
+├── app.py
+├── config.py
+├── requirements.txt
+├── .env
+│
+├── services/
+│   ├── mcp_client.py
+│   ├── agent.py
+│   └── memory.py
+│
+└── prompts/
+    └── system_prompt.txt
+
+Qué hará cada archivo
+
+app.py → interfaz Streamlit
+config.py → cargar variables de entorno
+.env → credenciales / configuración
+mcp_client.py → conexión con MCP
+agent.py → lógica principal del agente
+memory.py → contexto conversacional
+system_prompt.txt → tu prompt del sistema
+
+
+1. Crear un entorno Para aislar el proyecto
+
+asegurar que todo el código se ejecuta en un entorno aislado y controlado, evitando conflictos con otras instalaciones de Python 
+
+decirle a VS Code que use ese entorno
+Ctrl + Shift + P
+Python: Select Interpreter --< .venv
+terminal debe apuntar a .env
+
+2. Instalar requirements.txt
+Archivo para definir las herramientas que necesita la aplicacion para funcionar (para reproducir el proyecto en otro equipo y desplegarlo en servidores)
+streamlit
+python-dotenv --> gestionar la configuración de forma segura (tokens, credenciale...), Se guardan en .env en vez de en el código.
+openai
+requests --> requests: conectarnos con servicios externos como MCP 
+
+3. Cargar el prompt del sistema en system_prompt.txt
