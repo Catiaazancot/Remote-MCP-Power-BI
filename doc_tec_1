@@ -91,25 +91,6 @@ Segmentación / clustering
 👉 El valor está en el control + capa de negocio
 
 
-  Correcto: no es necesario decidir la herramienta todavía. De hecho, ahora mismo sería precipitado.
-
-Estás en una fase donde lo importante es:
-
-🎯 Qué SÍ debes tener claro ahora
-Cómo debe comportarse el agente
-→ ya lo tienes bastante trabajado (esto es lo más importante)
-Qué problema resuelve
-→ “chat con tu negocio sobre Power BI”
-Qué límites tiene
-→ no predice, no inventa, pide aclaración, etc.
-Cómo se conecta (MCP)
-→ ya validado ✔️
-🧠 Qué NO necesitas decidir aún
-herramienta de interfaz (Streamlit, Lovable, etc.)
-diseño visual
-arquitectura final
-despliegue
-
 👉 Eso viene después.
 
 📌 Orden correcto (muy importante)
@@ -121,26 +102,38 @@ despliegue
 🔜 Construir MVP
 ⚠️ Error típico (evítalo)
 
-Ir demasiado pronto a:
 
-“qué herramienta uso”
-“cómo hago la app”
 
-Sin tener claro:
 
-comportamiento
-reglas
-experiencia
+HERRAMIENTA DOCKERIZABLE
 
-👉 Tú ya vas bien porque estás haciendo lo difícil primero.
 
-🧩 Cuándo decidir herramienta
 
-Cuando tengas claro:
+Ahora mismo, el filtro principal para decidir no debería ser “qué me gusta más”, sino:
 
-cómo es la interacción usuario → agente
-qué inputs hay
-qué outputs das
-qué control necesitas
+si se puede meter bien en Docker
+si se puede desplegar en casi cualquier entorno
+si encaja con vuestro stack actual o no lo complica
+si da suficiente control sobre backend, prompt y configuración por cliente
+Lectura práctica sobre las opciones
+Si usas Python con una app web ligera
 
-👉 En ese punto, la herramienta se elige casi sola.
+Suele encajar bien con lo que te pide:
+
+dockerizable
+portable
+controlable
+reutilizable para producto
+Si usas herramientas tipo Lovable o Manus
+
+
+
+“Explora si quieres, pero la decisión final debe encajar con un producto serio, portable y desplegable en contenedor.”
+
+Así que ahora mismo, la postura más razonable sería:
+
+no decidir todavía la herramienta final
+sí definir que el MVP y el producto deben ser dockerizables
+usar eso como criterio para evaluar cualquier opción
+
+La traducción práctica es que, hoy por hoy, una solución basada en Python + interfaz web ligera parece más coherente que una plataforma cerrada.
