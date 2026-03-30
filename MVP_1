@@ -68,3 +68,7 @@ openai
 requests --> requests: conectarnos con servicios externos como MCP 
 
 3. Cargar el prompt del sistema en system_prompt.txt
+
+¿Por qué ponerlo en un archivo a parte? 
+1. Poder cambiar el agente sin tocar código, solo tengo que editar el .txt
+2. Poder tener en un futuro varios prompts y versiones del agente
