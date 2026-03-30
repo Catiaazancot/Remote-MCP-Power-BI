@@ -1,0 +1,146 @@
+FASES REALIZADAS
+  
+1. Preparación del modelo (Power BI)
+Unificación de nombres (lenguaje de negocio)
+Ocultación de campos técnicos
+Creación carpeta “Medidas MVP”
+👉 Objetivo: guiar al agente y reducir errores
+  
+2. Activación MCP (Remote)
+Activación en tenant (Fabric / Power BI)
+Uso de endpoint MCP
+Conexión desde VS Code + GitHub Copilot
+Autenticación con usuario
+👉 Validado: conexión + acceso + lectura de esquema
+
+3. Validación técnica inicial
+Consultas simples (ingresos, pedidos, ticket medio…)
+Verificación:
+resultados correctos
+uso de medidas adecuadas
+👉 Resultado: ✔️ precisión alta
+  
+4. Validación con lenguaje natural
+Preguntas ambiguas y reales
+Variaciones de lenguaje
+👉 Resultado: ✔️ buena interpretación
+  
+5. Test de estrés (casos complejos)
+Preguntas incoherentes → detecta pero asume demasiado
+Ambigüedad temporal → a veces decide por su cuenta
+Comparativas complejas → buen razonamiento pero sin control
+
+👉 Resultado: ⚠️ necesita reglas de comportamiento
+
+6. Test analítica avanzada
+Forecasting → pseudo (sin modelo real)
+Anomalías → heurístico (no estadístico)
+Drivers → aceptable
+
+👉 Resultado:
+✔ buen insight
+⚠ no es analítica avanzada real
+  
+7. Definición del PROMPT DEL SISTEMA
+Reglas de:
+ambigüedad
+incoherencias
+uso de medidas
+límites (no inventar, no predecir sin modelo)
+estructura de respuesta
+
+👉 Resultado: base para producto
+
+  
+🚀 PRÓXIMOS PASOS
+  
+1. Construir MVP
+Interfaz de chat
+Backend (Python)
+Conexión a MCP
+Incluir prompt del sistema
+  
+2. Capa de control (clave)
+  
+Forzar uso de medidas correctas
+Gestión de ambigüedad
+Validaciones antes de responder
+  
+3. Capa de valor negocio
+  
+Añadir:
+insights automáticos
+contexto
+explicaciones claras
+  
+4. Mejora del modelo semántico
+Revisar relaciones (ej: fechas)
+Afinar medidas
+👉 Impacto directo en calidad del agente
+  
+5. Diferenciación (fase avanzada)
+Forecasting real (Python / ML)
+Anomalías estadísticas
+Segmentación / clustering
+  
+🎯 RESUMEN CLAVE
+
+👉 MCP funciona
+👉 El modelo responde bien
+👉 El riesgo está en el comportamiento
+👉 El valor está en el control + capa de negocio
+
+
+  Correcto: no es necesario decidir la herramienta todavía. De hecho, ahora mismo sería precipitado.
+
+Estás en una fase donde lo importante es:
+
+🎯 Qué SÍ debes tener claro ahora
+Cómo debe comportarse el agente
+→ ya lo tienes bastante trabajado (esto es lo más importante)
+Qué problema resuelve
+→ “chat con tu negocio sobre Power BI”
+Qué límites tiene
+→ no predice, no inventa, pide aclaración, etc.
+Cómo se conecta (MCP)
+→ ya validado ✔️
+🧠 Qué NO necesitas decidir aún
+herramienta de interfaz (Streamlit, Lovable, etc.)
+diseño visual
+arquitectura final
+despliegue
+
+👉 Eso viene después.
+
+📌 Orden correcto (muy importante)
+✅ Validar MCP + modelo
+✅ Validar comportamiento (lo que has hecho)
+✅ Definir reglas (prompt)
+🔜 Diseñar flujo funcional del producto
+🔜 Elegir herramienta
+🔜 Construir MVP
+⚠️ Error típico (evítalo)
+
+Ir demasiado pronto a:
+
+“qué herramienta uso”
+“cómo hago la app”
+
+Sin tener claro:
+
+comportamiento
+reglas
+experiencia
+
+👉 Tú ya vas bien porque estás haciendo lo difícil primero.
+
+🧩 Cuándo decidir herramienta
+
+Cuando tengas claro:
+
+cómo es la interacción usuario → agente
+qué inputs hay
+qué outputs das
+qué control necesitas
+
+👉 En ese punto, la herramienta se elige casi sola.
