@@ -1,0 +1,30 @@
+Motivos cambio de enfoque:
+la parte de conectividad “tipo motor analítico” por XMLA sí está ligada a Premium / PPU / Embedded, y además Microsoft distingue claramente entre aplicaciones de usuario único y multiusuario. 
+Para apps multiusuario, el uso cambia bastante según sea PPU o Premium, y ahí es donde empiezan muchas restricciones operativas y de licenciamiento.
++ Preview --> preview + dependencia de backend/capacidad + comportamiento todavía cambiante
+
+
+Camino propuesto: 
+Usar MCP solo para leer esquema (GetSemanticModelSchema), mientras os aporte valor.
+Generar DAX fuera del MCP con vuestro LLM.
+Ejecutar el DAX por REST con datasets/{id}/executeQueries.
+
+Notas y límites:
+- el endpoint REST de Execute Queries sí permite ejecutar consultas DAX contra un semantic model sin exigir Fabric/Premium solo por usar esa API
+- Para usar: autenticación app/service principal, Microsoft indica limitaciones relevantes: no funciona con datasets con RLS o con SSO enabled en Execute Queries. si el producto necesita RLS fuerte con service principal o escenarios multiempresa complejos, hay que diseñar muy bien la autenticación desde el principio
+- Riesgo principal: generacion de dax (perdemos precision en posibles consultas ambiguas, complejas...) --> por ello, en caso de venta, ponerlo como: producto con un marco muy controlado."Agente de negocio que responde preguntsa ejecutivas y analíticas concretas
+- endpoint REST: una sola query por llamada, una sola tabla de resultado por query, máximo 100.000 filas o 1.000.000 de valores, máximo 15 MB, y un límite de 120 requests por minuto por usuario. 
+
+
+Puntos obligatorios para un correcto funcionamiento: 
+- Limitar el agente a trabajar principalmente con medidas oficiales del modelo, no con DAX libre salvo cuando sea necesario.
+- Extraer y guardar una capa semántica propia a partir del esquema: tablas, medidas, descripciones, formato, carpetas de medidas, relaciones visibles, columnas de fecha, etc.
+- Añadir una capa de validación del DAX antes de ejecutarlo.
+- Forzar un catálogo de patrones de consulta: ventas, margen, evolución temporal, comparativas, top N, segmentación, variación vs periodo anterior, etc.
+- Gestionar explícitamente las ambigüedades: “ventas” puede ser importe bruto, neto, pagado, facturado, etc.
+- Diseñar el producto para que, cuando la consulta sea demasiado compleja o incierta, responda con una reformulación o con una versión “segura” en vez de inventar.
+
+Arquitectura propuesta: 
+Modelo → lectura de esquema (getsemanticmodel remote mcp) → capa semántica propia del producto → LLM genera DAX restringido → validación → Execute Queries REST API → postproceso y respuesta.
+
+*Capa semantica propia. por ejemplo: Traducir lenguaje de negocio → modelo, Controlar qué puede usar el LLM (medidas válidas, tablas, relaciones), Evitar errores y DAX incorrecto
