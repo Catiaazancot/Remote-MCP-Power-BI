@@ -28,3 +28,80 @@ Arquitectura propuesta:
 Modelo → lectura de esquema (getsemanticmodel remote mcp) → capa semántica propia del producto → LLM genera DAX restringido → validación → Execute Queries REST API → postproceso y respuesta.
 
 *Capa semantica propia. por ejemplo: Traducir lenguaje de negocio → modelo, Controlar qué puede usar el LLM (medidas válidas, tablas, relaciones), Evitar errores y DAX incorrecto
+
+
+FASES PROPUESTAS:
+1 validacion tecnica:
+Conexión a dataset vía REST API (executeQueries)
+Extracción de esquema (MCP o REST)
+Generación de primeras queries DAX con LLM
+Ejecución + respuesta básica
+
+2. mvp funcional
+API en Python (FastAPI o similar)
+Integración con Power BI REST
+Generación de DAX (LLM)
+2. Capa semántica propia (CRÍTICO)
+Parser del modelo:
+Tablas
+Medidas
+Relaciones
+Estructura usable por el LLM
+Priorización de medidas “oficiales”
+3. Lógica del agente
+Prompt system robusto:
+No inventar métricas
+Priorizar medidas existentes
+Pedir aclaraciones
+Primer sistema de validación de DAX
+4. Interfaz
+Chat simple (Streamlit o similar)
+Input → respuesta + tabla
+
+Fase 3. Mejoras progresivas
+1. Precisión del DAX
+Plantillas de queries (time intelligence, comparativas…)
+Reglas por tipo de pregunta
+Fallbacks controlados
+2. Control de ambigüedad
+“Ventas” → preguntar: ¿netas, brutas, pagadas?
+Sistema de aclaraciones automático
+3. Validación y seguridad
+Validar DAX antes de ejecutar
+Limitar queries peligrosas
+Control de volumen (top N, filtros…)
+4. Postprocesado de resultados
+Formato claro (€, %, etc.)
+Explicación tipo negocio:
+“Las ventas han crecido un 12% vs mes anterior”
+5. Logging + mejora continua
+Guardar preguntas
+Detectar errores
+Reentrenar prompts
+
+Fase 4.Producto.
+1. Autenticación
+Azure AD / usuario Power BI
+Gestión de permisos
+2. Multi-cliente
+Configuración por empresa:
+dataset
+medidas clave
+reglas
+3. Dockerización
+Contenedor listo para despliegue
+Compatible con vuestro stack
+4. UI más profesional
+Historial
+Exportación
+Visualizaciones simples
+5. Gobierno del dato
+Uso de medidas certificadas
+Control de definiciones
+
+
+RIESGOS CLAVE A TENER EN CUENTA
+Precisión del DAX
+Ambigüedad del lenguaje natural
+Limitaciones API Power BI (filas, tamaño...)
+Autenticación / RLS
